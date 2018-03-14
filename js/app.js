@@ -17,11 +17,9 @@
   *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
   *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
   *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
+  *
+  *   Shuffle function from http://stackoverflow.com/a/2450976
   */
-
-
-
-
 
 
  // List of Objects
@@ -58,11 +56,11 @@ console.log(cardValues);
 
 
 //List of EventListeners
-deck.addEventListener('online',function(){
+deck.addEventListener('click',function(){
   console.log('card selected');
 });
 
-card.addEventListener('online',function(){
+card.addEventListener('click',function(){
   console.log('card selected');
 });
 
@@ -92,25 +90,81 @@ timerCount.addEventListener('click',function(){
 
 
 // List of Functions
-function cardsMatch(){
-
-};
-
 function cardFlip(){
+/*
+li.card selected then it is assigned a class of "card open show"
+  li.classList.add(open show);
 
+li.card rotate => part of the CSS code 'transform: rotateY(0)' .open
+*/
 };
 
-function movesCounter(){
+function cardsMatch(){
+/*
+create two empty variables
+
+when one card is selected store i class value in first variable
+when second card is selected store i class in second variables
+compare if first and second variable have the same value return true
+if they do not match then return false
+
+if both variable match then they keep their newly assigned "card open show" class
+if they don't match reset each card class to "card"
+
+*/
 
 };
 
 function allCardsMatch(){
+/*
+if all li.card classes are "card open show" then all of the cards match
 
+*/
+};
+
+function movesCounter(){
+/*
+each click on a card counts as a move
+
+*/
+};
+
+
+function timer(){
+/*
+when the first card is select on the page start counting the time by minutes and seconds (0:00)
+once all of the cards match make the timer to stop
+*/
+};
+
+function starRating(){
+/*
+change all of the li to have a class of "card"
+shuffle the positions of each li card in the ul
+
+*/
 };
 
 function cardReset(){
+/*
+change all of the li to have a class of "card"
+shuffle the positions of each li card in the ul
 
+*/
 };
+
+
+function playNewGame(){
+/*
+change all of the li to have a class of "card"
+shuffle the positions of each li card in the ul
+
+*/
+};
+
+
+
+
 
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -124,5 +178,4 @@ function shuffle(array) {
     }
 
     return array;
-    // Shuffle function from http://stackoverflow.com/a/2450976
 }
