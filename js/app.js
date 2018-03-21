@@ -23,83 +23,56 @@
 
 
  // List of Objects
-let deck = document.getElementsByClassName('deck');
-let card = document.getElementsByClassName('card');
-let star = document.getElementsByClassName('fa-star');
-let restart = document.getElementsByClassName('restart');
-let moves = document.getElementsByClassName('move')[0];
-let movesCount = moves.innerText;
-let timer = document.getElementsByClassName('timer')[0];
-let timerCount = timer.innerText;
-
-const cardValues = [
-     "fa fa-diamond",
-     "fa fa-paper-plane-0",
-     "fa fa-anchor",
-     "fa fa-bolt",
-     "fa fa-cube",
-     "fa fa-leaf",
-     "fa fa-bicycle",
-     "fa fa-bomb"
- ]
-
-console.log(deck);
-console.log(card);
-console.log(star);
-console.log(restart);
-console.log(moves);
-//console.log(movesCount);
-console.log(timer);
-console.log(timerCount);
-console.log(cardValues);
-
-
+let deck = document.querySelectorAll('.deck');
+let cardSelected;
+let openCards = [];
+let matchCount = [];
 
 //List of EventListeners
-deck.addEventListener('click',function(){
-  console.log('card selected');
-});
-
-card.addEventListener('click',function(){
-  console.log('card selected');
-});
-
-star.addEventListener('click',function(){
-  console.log('card selected');
-});
-
-restart.addEventListener('click',function(){
-  console.log('card selected');
-});
-
-moves.addEventListener('click',function(){
-  console.log('card selected');
-});
-
-timer.addEventListener('click',function(){
-  console.log('card selected');
-});
-
-timerCount.addEventListener('click',function(){
-  console.log('timer counter selected');
-});
+for(var i = 0; 0 < deck.length; i++){
+    deck[i].addEventListener('click', function(event){
+      cardSelected = event.target;
+       console.log('card Selected');
+      cardFlip(cardSelected);
+      cardsOpened(cardSelected);
+      if(openCards.length > 1) {
+        cardsMatch();
+      }
+})};
 
 
+function cardFlip(card){
+  card.classList += " open";
+  card.classList += " show";
+};
 
-
-
-
-// List of Functions
-function cardFlip(){
-/*
-li.card selected then it is assigned a class of "card open show"
-  li.classList.add(open show);
-
-li.card rotate => part of the CSS code 'transform: rotateY(0)' .open
-*/
+function cardsOpened(card){
+  openCards.push(card);
+  console.log(openCards);
 };
 
 function cardsMatch(){
+  let cardOne = openCards[0].firstElementChild.className;
+  let cardTwo = openCards[1].firstElementChild.className;
+  console.log(cardOne);
+  console.log(cardTwo);
+
+  if(cardOne === cardTwo){
+    //setMatchingCards();
+    matchCount++;
+    console.log("cards match");
+  } else {
+    console.log("cards do not match");
+  }
+};
+
+function clearCards(){
+  //reset the class of cardOne and cardTwo to "card" from "card open show"
+}
+
+
+//List of Functions
+
 /*
 create two empty variables
 
@@ -113,7 +86,7 @@ if they don't match reset each card class to "card"
 
 */
 
-};
+
 
 function allCardsMatch(){
 /*
