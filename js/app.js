@@ -28,7 +28,7 @@ let card = document.getElementsByClassName('card');
 let star = document.getElementsByClassName('fa-star');
 let restart = document.getElementsByClassName('restart');
 let moves = document.getElementsByClassName('move')[0];
-//let movesCount = moves.innerText;
+let movesCount = moves.innerText;
 let timer = document.getElementsByClassName('timer')[0];
 let timerCount = timer.innerText;
 
@@ -139,9 +139,11 @@ once all of the cards match make the timer to stop
 
 function starRating(){
 /*
-change all of the li to have a class of "card"
-shuffle the positions of each li card in the ul
-
+depending on the number of moves give the user a score for example:
+ Less than 5 moves === 3 Stars,
+ Less than 8 moves and more than 5 moves === 2 Stars,
+ Less than 12 moves and more than 8 moves === 1 Star,
+ More than 13 moves === 0 Stars
 */
 };
 
@@ -149,16 +151,19 @@ function cardReset(){
 /*
 change all of the li to have a class of "card"
 shuffle the positions of each li card in the ul
-
+reset timer to 0:00
+reset moves to 0
+reset starts to 3 Stars
 */
 };
 
 
 function playNewGame(){
 /*
-change all of the li to have a class of "card"
-shuffle the positions of each li card in the ul
 
+If the users selects play new game then call the follow function,
+cardReset();
+make card disappear
 */
 };
 
