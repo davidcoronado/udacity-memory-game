@@ -27,18 +27,72 @@ let deck = document.querySelectorAll('.deck');
 let cardSelected;
 let openCards = [];
 let matchCount = [];
+let cardClicked = [];
+let moves = document.querySelector('.moves');
+let star = document.querySelectorAll('.fa-star');
+let firstStar = star[0];
+let secondStar = star[1];
+let thirdStar = star[2];
+let secondsTimer = 0;
+let minutesTimer = 0;
+let timer = document.querySelector('.timer');
+let seconds = document.querySelector('.seconds');
+let minutes = document.querySelector('.minutes');
+let firstTimeCardClick = false;
+let deckOfCards = [ 'fa fa-anchor','fa fa-bolt', 'fa-cube','fa fa-anchor',
+  'fa fa-leaf','fa fa-bicycle','fa fa-diamond','fa fa-bomb',
+  'fa fa-leaf','fa fa-bomb','fa fa-bolt','fa fa-bicycle',
+  'fa fa-paper-plane-o','fa fa-cube', 'fa fa-paper-plane-o', 'fa fa-diamond'
+];
+let restart = document.querySelector('.restart');
+let cardValues = document.querySelectorAll('.deck .fa');
+
 
 //List of EventListeners
-for(var i = 0; 0 < deck.length; i++){
+for(var i = 0; i < deck.length; i++){
     deck[i].addEventListener('click', function(event){
       cardSelected = event.target;
-       console.log('card Selected');
+      cardClicked++;
+      if (firstTimeCardClick === false){
+          firstTimeCardClick = true;
+          setTimeout(timerStopWatch,1000);
+      };
+      console.log('card Selected');
       cardFlip(cardSelected);
       cardsOpened(cardSelected);
       if(openCards.length > 1) {
         cardsMatch();
       }
+      else if(matchCount => 8 ){
+        console.log("all cards match");
+      }
+      cardClickedTotal();
+      starRating(cardClicked);
 })};
+
+restart.addEventListener('click', function(){
+  resetCards();
+  //TODO need to rest timer
+  //TODO need to reset moves
+  //TODO need to reset starRating
+});
+
+//TODO NEW EVENT LISTENER
+//possibly add event listener on Page load to reset cards
+
+
+//TODO Add Event Listener for module popup to play a new game
+
+
+
+
+//List of Functions
+function resetCards(){
+	shuffle(deckOfCards);
+  for(var i = 0; i < cardValues.length; i++){
+    cardValues[i].className = deckOfCards[i]
+  }
+};
 
 
 function cardFlip(card){
@@ -58,92 +112,104 @@ function cardsMatch(){
   console.log(cardTwo);
 
   if(cardOne === cardTwo){
-    //setMatchingCards();
-    matchCount++;
+    setTimeout(matchingCards,1025);
     console.log("cards match");
+    return
   } else {
+    setTimeout(clearCards, 1025);
     console.log("cards do not match");
+    return
   }
 };
 
+function cardClickedTotal(){
+  moves.textContent = cardClicked;
+};
+
+function starRating(x){
+  switch (true) {
+    case (cardClicked < 16):
+      //three stars
+      console.log("Less than 8 moves");
+      break;
+    case (cardClicked > 16 && cardClicked < 20):
+      //two stars
+      thirdStar.classList = "fa fa-star-o";
+      console.log("Less than 14 moves but more than 8 moves");
+      break;
+    case (cardClicked > 20 && cardClicked < 24):
+      //one stars
+      secondStar.classList = "fa fa-star-o";
+      thirdStar.classList = "fa fa-star-o";
+      console.log("Less than 20 moves but more than 13 moves");
+      break;
+    case (cardClicked > 25):
+      //no stars
+      firstStar.classList = "fa fa-star-o";
+      secondStar.classList = "fa fa-star-o";
+      thirdStar.classList = "fa fa-star-o";
+      console.log("More than 20 moves")
+      break;
+  }
+  /*
+  depending on the number of moves give the user a score for example:
+   Less than 5 moves === 3 Stars,
+   Less than 8 moves and more than 5 moves === 2 Stars,
+   Less than 12 moves and more than 8 moves === 1 Star,
+   More than 13 moves === 0 Stars
+  */
+};
+
 function clearCards(){
-  //reset the class of cardOne and cardTwo to "card" from "card open show"
-}
+  //Resets the Class Name back to <li class="card"> from <li class="card open show">
+  openCards[0].classList.remove("open");
+  openCards[0].classList.remove("show");
+  openCards[1].classList.remove("open");
+  openCards[1].classList.remove("show");
+  //Resets the openCards array back to empty
+  openCards = [];
+};
 
-
-//List of Functions
-
-/*
-create two empty variables
-
-when one card is selected store i class value in first variable
-when second card is selected store i class in second variables
-compare if first and second variable have the same value return true
-if they do not match then return false
-
-if both variable match then they keep their newly assigned "card open show" class
-if they don't match reset each card class to "card"
-
-*/
-
-
+function matchingCards(){
+  matchCount++;
+  //Resets the Class Name back to <li class="card"> from <li class="card open show">
+  openCards[0].classList.remove("open");
+  openCards[0].classList.remove("show");
+  openCards[1].classList.remove("open");
+  openCards[1].classList.remove("show");
+  //Sets the Class Name to <li class="card match">
+  openCards[0].classList += " match";
+  openCards[1].classList += " match";
+  //Resets the openCards array back to empty
+  openCards = [];
+};
 
 function allCardsMatch(){
 /*
 if all li.card classes are "card open show" then all of the cards match
-
 */
 };
 
-function movesCounter(){
-/*
-each click on a card counts as a move
-
-*/
+// Timer Function
+function timerStopWatch(){
+  if (matchCount === 8){
+    return;
+  }
+secondsTimer = secondsTimer + 1;
+setTimeout(timerStopWatch,1000);
+if (secondsTimer === 60) {
+  secondsTimer = 0;
+  minutesTimer = minutesTimer + 1};
+  timer.textContent = "Timer " + minutesTimer + ":" + secondsTimer;
 };
-
-
-function timer(){
-/*
-when the first card is select on the page start counting the time by minutes and seconds (0:00)
-once all of the cards match make the timer to stop
-*/
-};
-
-function starRating(){
-/*
-depending on the number of moves give the user a score for example:
- Less than 5 moves === 3 Stars,
- Less than 8 moves and more than 5 moves === 2 Stars,
- Less than 12 moves and more than 8 moves === 1 Star,
- More than 13 moves === 0 Stars
-*/
-};
-
-function cardReset(){
-/*
-change all of the li to have a class of "card"
-shuffle the positions of each li card in the ul
-reset timer to 0:00
-reset moves to 0
-reset starts to 3 Stars
-*/
-};
-
 
 function playNewGame(){
 /*
-
 If the users selects play new game then call the follow function,
 cardReset();
 make card disappear
 */
 };
-
-
-
-
-
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
 
